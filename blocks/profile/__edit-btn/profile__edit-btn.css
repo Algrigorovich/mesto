@@ -9,9 +9,8 @@
   cursor: pointer;
   margin-left: 18px;
   transition: all 0.3s;
-  background: transparent;
   font-size: 0;
-  background: url(../../../images/pencil.svg) center center no-repeat;
+  background: transparent url(../../../images/pencil.svg) center center no-repeat;
 }
 .profile__edit-btn:hover {
   opacity: 0.6;

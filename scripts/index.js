@@ -12,7 +12,7 @@ const popup = document.querySelector('.popup');
 const popupOpenButton = document.querySelector('.profile__edit-btn');
 const popupCloseButton = document.querySelector('.popup__close');
 
-// Функция открытия
+// Функция открытия c проверкой
 function openPopup() {
   if (popup) {
     popup.classList.add('popup_opened');
@@ -23,7 +23,7 @@ function openPopup() {
   }
 }
 
-// Функция закрытия
+// Функция закрытия c проверкой
 function closePopup() {
   if (popup) {
     popup.classList.remove('popup_opened');
