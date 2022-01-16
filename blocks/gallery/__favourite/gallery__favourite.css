@@ -5,9 +5,7 @@
   transition: all 0.3s;
   width: 22px;
   height: 19px;
-  box-sizing: border-box;
   background: url(../../../images/heart.svg) center/cover no-repeat;
-  overflow: visible;
 }
 .gallery__favourite:hover {
   opacity: 0.5;
