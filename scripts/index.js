@@ -1,11 +1,11 @@
 // Элементы вёрстки
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-const formElement = document.querySelector('.profile-edit-form');
+const formElement = document.querySelector('.popup-form');
 
 // Инпуты
-const nameInput = formElement.querySelector('.profile-edit-form__input[name="name"]');
-const jobInput = formElement.querySelector('.profile-edit-form__input[name="job"]');
+const nameInput = formElement.querySelector('.popup-form__input[name="name"]');
+const jobInput = formElement.querySelector('.popup-form__input[name="job"]');
 
 // Элементы модалки
 const popup = document.querySelector('.popup');
