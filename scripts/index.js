@@ -46,11 +46,15 @@ formElement.addEventListener('submit', formSubmitHandler);
 // Ставим лайки
 const addToFavouriteBtn = document.querySelectorAll('.gallery__favourite');
 
-addToFavouriteBtn.forEach((element) => {
-  element.addEventListener('click', function () {
-    element.classList.toggle('gallery__favourite_active');
+if (addToFavouriteBtn) {
+  addToFavouriteBtn.forEach((element) => {
+    element.addEventListener('click', function () {
+      element.classList.toggle('gallery__favourite_active');
+    });
   });
-});
+} else {
+  console.log(`Элемент ${addToFavouriteBtn} отстутсвует на странице`);
+}
 
 //  Открытие и закрытие модалки с проверкой
 if (popupOpenButton) {
