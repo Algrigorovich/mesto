@@ -1,9 +1,6 @@
 .profile__edit-btn {
   width: 24px;
   height: 24px;
-  position: absolute;
-  right: -43px;
-  bottom: 7px;
   padding: 0;
   border: 1px solid #fff;
   cursor: pointer;
@@ -20,7 +17,6 @@
     width: 18px;
     height: 18px;
     background-size: 7.5px;
-    right: -26px;
-    bottom: 8px;
+    margin-left: 10px;
   }
 }
