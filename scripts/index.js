@@ -4,32 +4,24 @@ const profileJob = document.querySelector('.profile__job');
 const formElement = document.querySelector('.popup-form');
 
 // Инпуты
-const nameInput = formElement.querySelector('.popup-form__input[name="name"]');
-const jobInput = formElement.querySelector('.popup-form__input[name="job"]');
+const nameInput = formElement.querySelector('#name');
+const jobInput = formElement.querySelector('#job');
 
 // Элементы модалки
 const popup = document.querySelector('.popup');
 const popupOpenButton = document.querySelector('.profile__edit-btn');
 const popupCloseButton = document.querySelector('.popup__close');
 
-// Функция открытия c проверкой
+// Функция открытия
 function openPopup() {
-  if (popup) {
-    popup.classList.add('popup_opened');
-    nameInput.setAttribute('value', profileName.textContent);
-    jobInput.setAttribute('value', profileJob.textContent);
-  } else {
-    console.log(`Элемент ${popup} отстутсвует на странице`);
-  }
+  popup.classList.add('popup_opened');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
-// Функция закрытия c проверкой
+// Функция закрытия
 function closePopup() {
-  if (popup) {
-    popup.classList.remove('popup_opened');
-  } else {
-    console.log(`Элемент ${popup} отстутсвует на странице`);
-  }
+  popup.classList.remove('popup_opened');
 }
 
 // Обновляем информацию профиля
@@ -44,33 +36,20 @@ function formSubmitHandler(evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 // Ставим лайки
-const addToFavouriteBtn = document.querySelectorAll('.gallery__favourite');
+// const addToFavouriteBtn = document.querySelectorAll('.gallery__favourite');
 
-if (addToFavouriteBtn) {
-  addToFavouriteBtn.forEach((element) => {
-    element.addEventListener('click', function () {
-      element.classList.toggle('gallery__favourite_active');
-    });
-  });
-} else {
-  console.log(`Элемент ${addToFavouriteBtn} отстутсвует на странице`);
-}
+// addToFavouriteBtn.forEach((element) => {
+//   element.addEventListener('click', function () {
+//     element.classList.toggle('gallery__favourite_active');
+//   });
+// });
 
 //  Открытие и закрытие модалки с проверкой
-if (popupOpenButton) {
-  popupOpenButton.addEventListener('click', openPopup);
-} else {
-  console.log(`Элемент ${popupOpenButton} отстутсвует на странице`);
-}
+popupOpenButton.addEventListener('click', openPopup);
+popupCloseButton.addEventListener('click', closePopup);
 
-if (popupCloseButton) {
-  popupCloseButton.addEventListener('click', closePopup);
-} else {
-  console.log(`Элемент ${popupCloseButton} отстутсвует на странице`);
-}
-
-popup.addEventListener('click', function (event) {
-  if (event.target === event.currentTarget) {
-    closePopup();
-  }
-});
+// popup.addEventListener('click', function (event) {
+//   if (event.target === event.currentTarget) {
+//     closePopup();
+//   }
+// });

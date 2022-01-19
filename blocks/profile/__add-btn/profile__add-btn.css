@@ -11,18 +11,12 @@
   transition: all 0.3s;
   cursor: pointer;
   margin-left: auto;
+  background: url(../../../images/plus.svg) center/22px no-repeat;
 }
 .profile__add-btn:hover {
   opacity: 0.6;
 }
 
-.profile__add-btn::before {
-  content: '';
-  position: absolute;
-  background: url(../../../images/plus.svg) center center no-repeat;
-  width: 22px;
-  height: 22px;
-}
 @media screen and (max-width: 767px) {
   .profile__add-btn {
     margin-left: 0;
@@ -32,5 +26,6 @@
 @media screen and (max-width: 567px) {
   .profile__add-btn {
     width: 100%;
+    background-size: 16px;
   }
 }
