@@ -13,3 +13,8 @@
 .popup-form__input:last-of-type {
   margin-bottom: 47px;
 }
+@media screen and (max-width: 568px) {
+  .popup-form__input:last-of-type {
+    margin-bottom: 44px;
+  }
+}
