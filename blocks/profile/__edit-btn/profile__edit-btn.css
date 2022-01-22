@@ -8,6 +8,7 @@
   transition: all 0.3s;
   font-size: 0;
   background: transparent url(../../../images/pencil.svg) center center no-repeat;
+  display: flex;
 }
 .profile__edit-btn:hover {
   opacity: 0.6;

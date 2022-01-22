@@ -44,7 +44,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 //   });
 // });
 
-//  Открытие и закрытие модалки с проверкой
+//  Открытие и закрытие модалки
 popupOpenButton.addEventListener('click', openPopup);
 popupCloseButton.addEventListener('click', closePopup);
 
