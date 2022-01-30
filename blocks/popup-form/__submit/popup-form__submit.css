@@ -8,11 +8,12 @@
   font-size: 18px;
   line-height: 22px;
   text-align: center;
+  padding: 0;
   color: #fff;
   cursor: pointer;
   transition: all 0.3s;
 }
-.button:hover {
+.popup-form__submit:hover {
   opacity: 0.8;
 }
 @media screen and (max-width: 767px) {

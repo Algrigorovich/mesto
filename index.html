@@ -1,93 +1,83 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css"/>
-</head>
-<body class="page">
-  <div class="page__container">
-    <header class="header page__header">
-      <a href="/" class="logo">
-        <img src="./images/logo.svg" alt="Логотип" class="logo__img"/>
-      </a>
-    </header>
-    <main class="content">
-      <section class="profile content__profile">
-        <img src="./images/avatar.png" alt="Аватар" class="profile__avatar"/>
-        <div class="profile__info">
-          <div class="profile__name-wrapper">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+  </head>
+
+  <body class="page">
+    <div class="page__container">
+
+      <header class="header page__header">
+        <a href="/" class="logo">
+          <img src="./images/logo.svg" alt="Логотип" class="logo__img" />
+        </a>
+      </header>
+
+      <main class="content">
+        <section class="profile content__profile">
+          <img src="./images/avatar.png" alt="Аватар" class="profile__avatar" />
+          <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button class="profile__edit-btn" type="button" aria-label="Редактировать"></button>
+            <p class="profile__job">Исследователь океана</p>
           </div>
-          <p class="profile__job">Исследователь океана</p>
+          <button class="profile__add-btn" type="button" aria-label="Добавить"></button>
+        </section>
+        <section class="gallery content__gallery" aria-label="Галерея мест">
+          <ul class="gallery__list">
+          </ul>
+        </section>
+      </main>
+
+      <footer class="footer page__footer">
+        <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+      </footer>
+
+      <div class="popup popup_edit-profile">
+        <div class="popup__container">
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form action="/" method="post" class="popup-form" name="profile-edit" id="profile-edit-form">
+            <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя" />
+            <input type="text" class="popup-form__input" id="job" name="job" placeholder="Профессия" />
+            <button class="popup-form__submit" type="submit">Сохранить</button>
+          </form>
         </div>
-        <button class="profile__add-btn" type="button" aria-label="Добавить"></button>
-      </section>
-      <section class="gallery content__gallery">
-        <ul class="gallery__list">
-          <li class="gallery-item">
-            <img src="./images/altai.jpg" alt="Алтай" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Алтай</h2>
-              <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-          <li class="gallery-item">
-            <img src="./images/baikal.jpg" alt="Байкал" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Байкал</h2>
-              <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-          <li class="gallery-item">
-            <img src="./images/ergaki.jpg" alt="Ергаки" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Ергаки</h2>
-              <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-          <li class="gallery-item">
-            <img src="./images/karelia.jpg" alt="Карелия" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Карелия</h2>
-              <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-          <li class="gallery-item">
-            <img src="./images/piter.jpg" alt="Санкт-Петербург" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Санкт-Петербург</h2>
-              <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-          <li class="gallery-item">
-            <img src="./images/sochi.jpg" alt="Сочи" class="gallery-item__img"/>
-            <div class="gallery-item__footer">
-              <h2 class="gallery-item__title">Сочи</h2>
-              <button class="gallery-item__favourite gallery-item__favourite_active" type="button" aria-label="Поставить лайк"></button>
-            </div>
-          </li>
-        </ul>
-      </section>
-    </main>
-    <footer class="footer page__footer">
-      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
-    </footer>
-    <div class="popup">
-      <div class="popup__container">
-        <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form action="/" method="post" class="popup-form" name="profile-edit">
-          <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя"/>
-          <input type="text" class="popup-form__input" id="job" name="job" placeholder="Профессия"/>
-          <button class="popup-form__submit" type="submit">Сохранить</button>
-        </form>
+      </div>
+      <div class="popup popup_add-item">
+        <div class="popup__container">
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form action="/" method="post" class="popup-form" name="add-cart" id="add-cart-form">
+            <input type="text" class="popup-form__input" required id="card-title" name="title" placeholder="Название" />
+            <input type="text" class="popup-form__input" required id="card-link" name="link"
+              placeholder="Ссылка на картинку" />
+            <button class="popup-form__submit" type="submit">Создать</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup popup_fullscreen-img">
+        <div class="popup__container popup__container_type_image">
+          <button class="popup__close" type="button" aria-label="Закрыть"></button>
+          <img src="#" alt="Альт" class="popup__img">
+          <p class="popup__img-name"></p>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="./scripts/index.js"></script>
-</body>
+    <template class="gallery-item-template">
+      <li class="gallery-item">
+        <img alt="" class="gallery-item__img" />
+        <img src="./images/trash.svg" class="gallery-item__delete" alt="Удалить">
+        <div class="gallery-item__footer">
+          <h2 class="gallery-item__title"></h2>
+          <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
+        </div>
+      </li>
+    </template>
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
