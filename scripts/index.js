@@ -27,8 +27,6 @@ const addCardForm = document.querySelector('#add-cart-form');
 // Инпуты
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#job');
-const cardTitleInput = document.querySelector('#card-title');
-const linkInput = document.querySelector('#card-link');
 
 // Карточки по умолчанию
 const initialCards = [
@@ -81,11 +79,12 @@ profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 // Добавление карточек
 function handleAddCardSubmit(event) {
   event.preventDefault();
+  const form = event.target;
   const item = {};
-  item.name = cardTitleInput.value;
-  item.link = linkInput.value;
+  item.name = form.querySelector('#card-title').value;
+  item.link = form.querySelector('#card-link').value;
   renderItem(item);
-  event.target.reset(); // очищаем поля формы
+  form.reset(); // очищаем поля формы
   closePopup(addCardPopup);
 }
 
@@ -115,29 +114,31 @@ function render(items) {
   items.forEach(renderItem);
 }
 
-function renderItem(obj) {
-  const newCard = createCard();
-  const cardImage = newCard.querySelector('.gallery-item__img');
-  const cardTitle = newCard.querySelector('.gallery-item__title');
-
-  cardImage.src = obj.link;
-  cardTitle.textContent = obj.name;
-  cardImage.alt = obj.name;
+function renderItem(item) {
+  const newCard = createCard(item);
   cardsList.prepend(newCard);
 }
 
 // Создание карточки
-function createCard() {
+function createCard(item) {
   const cardElement = template.querySelector('.gallery-item').cloneNode(true);
-  addListeners(cardElement);
+  const cardImage = cardElement.querySelector('.gallery-item__img');
+  const cardTitle = cardElement.querySelector('.gallery-item__title');
+  const deleteBtn = cardElement.querySelector('.gallery-item__delete');
+  const favouriteBtn = cardElement.querySelector('.gallery-item__favourite');
+
+  cardImage.src = item.link;
+  cardTitle.textContent = item.name;
+  cardImage.alt = item.name;
+  addListeners(cardImage, deleteBtn, favouriteBtn);
   return cardElement;
 }
 
 // Слушатели событий для карточек
-function addListeners(el) {
-  el.querySelector('.gallery-item__delete').addEventListener('click', handleDelete);
-  el.querySelector('.gallery-item__favourite').addEventListener('click', handleFavourite);
-  el.querySelector('.gallery-item__img').addEventListener('click', openFullwidthImg);
+function addListeners(cardImage, deleteBtn, favouriteBtn) {
+  deleteBtn.addEventListener('click', handleDelete);
+  favouriteBtn.addEventListener('click', handleFavourite);
+  cardImage.addEventListener('click', openFullwidthImg);
 }
 
 // Удаление карточек
