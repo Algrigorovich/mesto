@@ -26,7 +26,7 @@ const addCardForm = document.querySelector('#add-cart-form');
 
 // Инпуты
 const nameInput = document.querySelector('#name');
-const jobInput = document.querySelector('#job');
+const jobInput = document.querySelector('#about');
 
 // Карточки по умолчанию
 const initialCards = [
@@ -68,7 +68,6 @@ function closePopup(popup) {
 
 // Обновляем информацию профиля
 function handleProfileFormSubmit(event) {
-  event.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(profileEditPopup);
@@ -78,7 +77,6 @@ profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 
 // Добавление карточек
 function handleAddCardSubmit(event) {
-  event.preventDefault();
   const form = event.target;
   const item = {};
   item.name = form.querySelector('#card-title').value;
@@ -95,6 +93,7 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
+  toggleButtonState([nameInput, jobInput])
 });
 
 // Открытие модалки добавление карточки

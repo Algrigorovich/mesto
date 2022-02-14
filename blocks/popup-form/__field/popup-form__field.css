@@ -1,0 +1,11 @@
+.popup-form__field {
+  width: 100%;
+  min-height: 52px;
+}
+.popup-form__field:first-of-type {
+  margin-bottom: 8px;
+}
+.popup-form__field:last-of-type {
+  margin-bottom: 27px;
+}
+

@@ -6,15 +6,22 @@
   font-size: 14px;
   line-height: 17px;
   padding: 4px 0 8px;
+  margin-bottom: 5px;
 }
 .popup-form__input:first-of-type {
-  margin-bottom: 30px;
+
 }
 .popup-form__input:last-of-type {
-  margin-bottom: 47px;
+
 }
 @media screen and (max-width: 568px) {
   .popup-form__input:last-of-type {
-    margin-bottom: 44px;
+
   }
+}
+.popup-form__input::placeholder {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #C4C4C4;
 }

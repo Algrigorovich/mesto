@@ -41,25 +41,48 @@
         <div class="popup__container">
           <button class="popup__close" type="button" aria-label="Закрыть"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form action="/" method="post" class="popup-form" name="profile-edit" id="profile-edit-form">
-            <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя" />
-            <input type="text" class="popup-form__input" id="job" name="job" placeholder="Профессия" />
+
+          <form action="/" method="post" class="popup-form" name="profile-edit" id="profile-edit-form" novalidate>
+
+            <label for="name" class="popup-form__field">
+              <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя" required
+              minlength="2" maxlength="40"/>
+              <span class="popup-form__input-error name-input-error">Ошибка</span>
+            </label>
+
+            <label for="about" class="popup-form__field">
+              <input type="text" class="popup-form__input" id="about" name="about" placeholder="О себе" required
+              minlength="2" maxlength="200"/>
+              <span class="popup-form__input-error about-input-error">Ошибка</span>
+            </label>
+
             <button class="popup-form__submit" type="submit">Сохранить</button>
           </form>
         </div>
       </div>
+
       <div class="popup popup_add-item">
         <div class="popup__container">
           <button class="popup__close" type="button" aria-label="Закрыть"></button>
           <h2 class="popup__title">Новое место</h2>
-          <form action="/" method="post" class="popup-form" name="add-cart" id="add-cart-form">
-            <input type="text" class="popup-form__input" required id="card-title" name="title" placeholder="Название" />
-            <input type="text" class="popup-form__input" required id="card-link" name="link"
-              placeholder="Ссылка на картинку" />
+
+          <form action="/" method="post" class="popup-form" name="add-cart" id="add-cart-form" novalidate>
+
+            <label for="card-title" class="popup-form__field">
+              <input type="text" class="popup-form__input" required id="card-title" name="card-title" placeholder="Название" required minlength="2" maxlength="30"/>
+              <span class="popup-form__input-error card-title-input-error">Ошибка</span>
+            </label>
+
+            <label for="card-link" class="popup-form__field">
+              <input type="url" class="popup-form__input" required id="card-link" name="card-link" placeholder="Ссылка на картинку" required/>
+              <span class="popup-form__input-error card-link-input-error popup-form__input-error_active">Ошибка</span>
+            </label>
+
             <button class="popup-form__submit" type="submit">Создать</button>
           </form>
         </div>
       </div>
+
       <div class="popup popup_fullscreen-img">
         <div class="popup__container popup__container_type_image">
           <button class="popup__close" type="button" aria-label="Закрыть"></button>
@@ -67,7 +90,9 @@
           <p class="popup__img-name"></p>
         </div>
       </div>
+
     </div>
+
     <template class="gallery-item-template">
       <li class="gallery-item">
         <img alt="" class="gallery-item__img" />
@@ -79,5 +104,6 @@
       </li>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
   </body>
 </html>
