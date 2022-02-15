@@ -4,7 +4,6 @@ const profileJob = document.querySelector('.profile__job');
 const formElement = document.querySelector('.popup-form');
 const cardsList = document.querySelector('.gallery__list');
 
-
 // Temaplate
 const template = document.querySelector('.gallery-item-template').content;
 
@@ -59,6 +58,14 @@ const initialCards = [
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   addPopupListeners(popup);
+  enableValidation({
+    formSelector: '.popup-form',
+    inputSelector: '.popup-form__input',
+    submitButtonSelector: '.popup-form__submit',
+    inactiveButtonClass: 'popup-form__submit_disabled',
+    inputErrorClass: 'popup-form__input_type_error',
+    errorClass: 'popup-form__input-error_visible',
+  });
 }
 
 // Функция закрытия модалки
@@ -67,19 +74,9 @@ function closePopup(popup) {
   removePopupListeners(popup);
 }
 
-// Обновляем информацию профиля
-function handleProfileFormSubmit(event) {
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(profileEditPopup);
-}
-
-profileEditForm.addEventListener('submit', handleProfileFormSubmit);
-
 // Устанавливаем слушатели на попап
 function addPopupListeners(popup) {
   const popupCloseButton = popup.querySelector('.popup__close');
-
   popupCloseButton.addEventListener('click', hadleClosePopupByButton);
   popup.addEventListener('click', hadleClosePopupByOverlay);
 }
@@ -87,11 +84,9 @@ function addPopupListeners(popup) {
 // Удаляем слушатели с попапа
 function removePopupListeners(popup) {
   const popupCloseButton = popup.querySelector('.popup__close');
-
   popupCloseButton.removeEventListener('click', hadleClosePopupByButton);
   popup.removeEventListener('click', hadleClosePopupByOverlay);
 }
-
 
 // Закрытие модалок кликом на крестик
 function hadleClosePopupByButton (event) {
@@ -112,13 +107,21 @@ document.addEventListener('keydown', function(event) {
     if (openedPopup && event.key == 'Escape') {
       closePopup(openedPopup);
     }
-
-
 })
 
+// Обновляем информацию профиля
+function handleProfileFormSubmit(event) {
+  event.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  closePopup(profileEditPopup);
+}
+
+profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 
 // Добавление карточек
 function handleAddCardSubmit(event) {
+  event.preventDefault();
   const form = event.target;
   const item = {};
   item.name = form.querySelector('#card-title').value;
@@ -143,7 +146,6 @@ popupProfileOpenButton.addEventListener('click', function () {
 popupAddOpenButton.addEventListener('click', function () {
   openPopup(addCardPopup);
 });
-
 
 // Рендер карточек
 function render(items) {
@@ -186,7 +188,6 @@ function handleDelete(event) {
 function handleFavourite(event) {
   event.target.classList.toggle('gallery-item__favourite_active');
 }
-
 
 // Открываем картинки
 function openFullwidthImg(event) {
