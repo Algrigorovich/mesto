@@ -16,7 +16,6 @@ const imgPopup = document.querySelector('.popup_fullscreen-img');
 // Элементы модалки
 const popupProfileOpenButton = document.querySelector('.profile__edit-btn');
 const popupAddOpenButton = document.querySelector('.profile__add-btn');
-const popupCloseButtons = document.querySelectorAll('.popup__close');
 const cardImageLink = document.querySelector('.popup__img');
 const cardImageName = document.querySelector('.popup__img-name');
 
@@ -57,13 +56,15 @@ const initialCards = [
 ];
 
 // Функция открытия модалки
-function openPopup(item) {
-  item.classList.add('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  addPopupListeners(popup);
 }
 
 // Функция закрытия модалки
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  removePopupListeners(popup);
 }
 
 // Обновляем информацию профиля
@@ -74,6 +75,47 @@ function handleProfileFormSubmit(event) {
 }
 
 profileEditForm.addEventListener('submit', handleProfileFormSubmit);
+
+// Устанавливаем слушатели на попап
+function addPopupListeners(popup) {
+  const popupCloseButton = popup.querySelector('.popup__close');
+
+  popupCloseButton.addEventListener('click', hadleClosePopupByButton);
+  popup.addEventListener('click', hadleClosePopupByOverlay);
+}
+
+// Удаляем слушатели с попапа
+function removePopupListeners(popup) {
+  const popupCloseButton = popup.querySelector('.popup__close');
+
+  popupCloseButton.removeEventListener('click', hadleClosePopupByButton);
+  popup.removeEventListener('click', hadleClosePopupByOverlay);
+}
+
+
+// Закрытие модалок кликом на крестик
+function hadleClosePopupByButton (event) {
+  closePopup(event.currentTarget.closest('.popup'))
+}
+
+// Закрытие модалок кликом на оверлей
+function hadleClosePopupByOverlay (event) {
+  if (event.target === event.currentTarget) {
+    closePopup(event.target );
+  }
+}
+
+// закрытие попапа клавишей Esc
+document.addEventListener('keydown', function(event) {
+  const openedPopup = document.querySelector('.popup_opened');
+
+    if (openedPopup && event.key == 'Escape') {
+      closePopup(openedPopup);
+    }
+
+
+})
+
 
 // Добавление карточек
 function handleAddCardSubmit(event) {
@@ -93,7 +135,8 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
-  toggleButtonState([nameInput, jobInput])
+  const inputList = [nameInput, jobInput];
+  // toggleButtonState(inputList)
 });
 
 // Открытие модалки добавление карточки
@@ -101,12 +144,6 @@ popupAddOpenButton.addEventListener('click', function () {
   openPopup(addCardPopup);
 });
 
-// Закрытие модалок
-popupCloseButtons.forEach((element) => {
-  element.addEventListener('click', function (event) {
-    closePopup(event.target.closest('.popup'));
-  });
-});
 
 // Рендер карточек
 function render(items) {
@@ -129,12 +166,12 @@ function createCard(item) {
   cardImage.src = item.link;
   cardTitle.textContent = item.name;
   cardImage.alt = item.name;
-  addListeners(cardImage, deleteBtn, favouriteBtn);
+  addCardListeners(cardImage, deleteBtn, favouriteBtn);
   return cardElement;
 }
 
 // Слушатели событий для карточек
-function addListeners(cardImage, deleteBtn, favouriteBtn) {
+function addCardListeners(cardImage, deleteBtn, favouriteBtn) {
   deleteBtn.addEventListener('click', handleDelete);
   favouriteBtn.addEventListener('click', handleFavourite);
   cardImage.addEventListener('click', openFullwidthImg);
@@ -149,6 +186,7 @@ function handleDelete(event) {
 function handleFavourite(event) {
   event.target.classList.toggle('gallery-item__favourite_active');
 }
+
 
 // Открываем картинки
 function openFullwidthImg(event) {
