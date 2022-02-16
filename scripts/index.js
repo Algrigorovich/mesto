@@ -4,7 +4,7 @@ const profileJob = document.querySelector('.profile__job');
 const formElement = document.querySelector('.popup-form');
 const cardsList = document.querySelector('.gallery__list');
 
-// Temaplate
+// Template
 const template = document.querySelector('.gallery-item-template').content;
 
 // Попапы
@@ -81,25 +81,25 @@ function removePopupListeners(popup) {
 }
 
 // Закрытие модалок кликом на крестик
-function hadleClosePopupByButton (event) {
-  closePopup(event.currentTarget.closest('.popup'))
+function hadleClosePopupByButton(event) {
+  closePopup(event.currentTarget.closest('.popup'));
 }
 
 // Закрытие модалок кликом на оверлей
-function hadleClosePopupByOverlay (event) {
+function hadleClosePopupByOverlay(event) {
   if (event.target === event.currentTarget) {
-    closePopup(event.target );
+    closePopup(event.target);
   }
 }
 
 // закрытие попапа клавишей Esc
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   const openedPopup = document.querySelector('.popup_opened');
 
-    if (openedPopup && event.key == 'Escape') {
-      closePopup(openedPopup);
-    }
-})
+  if (openedPopup && event.key == 'Escape') {
+    closePopup(openedPopup);
+  }
+});
 
 // Обновляем информацию профиля
 function handleProfileFormSubmit(event) {
@@ -130,8 +130,11 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
-  const inputList = [nameInput, jobInput];
-  // toggleButtonState(inputList)
+  // по идее тут надо вызывать функцию проверки состояния инпутов и в зависимости от этого менять состояние кнопки
+  // но я не знаю как это реализовать без дублирования
+  // const inputList = [nameInput, jobInput];
+  // const button = profileEditPopup.querySelector('.popup-form__submit')
+  // toggleButtonState(inputList, button, { inactiveButtonClass: 'popup-form__submit_disabled'} )
 });
 
 // Открытие модалки добавление карточки

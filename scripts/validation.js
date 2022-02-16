@@ -1,10 +1,7 @@
-// const formSubmit = (event, formElement) => {
-//   event.preventDefault();
-//   console.log(formElement);
-//   // if (form.checkValidity()) {
-//   //     form.reset();
-//   // }
-// };
+const formSubmit = (event, formElement) => {
+  event.preventDefault();
+};
+
 // показываем сообщения об ошибках
 const showInputError = (inputElement, errorElement, config) => {
   errorElement.classList.add(config.errorClass);
@@ -77,6 +74,7 @@ const setInputEventListeners = (formElement, config) => {
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (event )=> formSubmit(event, formElement))
     setInputEventListeners(formElement, config);
   });
 };
