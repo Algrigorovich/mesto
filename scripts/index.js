@@ -8,6 +8,7 @@ const cardsList = document.querySelector('.gallery__list');
 const template = document.querySelector('.gallery-item-template').content;
 
 // Попапы
+const popups = document.querySelectorAll('.popup');
 const profileEditPopup = document.querySelector('.popup_edit-profile');
 const addCardPopup = document.querySelector('.popup_add-item');
 const imgPopup = document.querySelector('.popup_fullscreen-img');
@@ -57,49 +58,43 @@ const initialCards = [
 // Функция открытия модалки
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  addPopupListeners(popup);
+  addPopupListeners();
 }
 
 // Функция закрытия модалки
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  removePopupListeners(popup);
+  removePopupListeners();
+}
+// Устанавливаем слушатели на закрытие попапа нажатием на Escape
+function addPopupListeners() {
+  document.addEventListener('keydown', hadleСloseByEscape);
 }
 
-// Устанавливаем слушатели на попап
-function addPopupListeners(popup) {
-  const popupCloseButton = popup.querySelector('.popup__close');
-  popupCloseButton.addEventListener('click', hadleClosePopupByButton);
-  popup.addEventListener('click', hadleClosePopupByOverlay);
-}
-
-// Удаляем слушатели с попапа
+// Удаляем слушатели с закрытия попапа нажатием на Escape
 function removePopupListeners(popup) {
-  const popupCloseButton = popup.querySelector('.popup__close');
-  popupCloseButton.removeEventListener('click', hadleClosePopupByButton);
-  popup.removeEventListener('click', hadleClosePopupByOverlay);
-}
-
-// Закрытие модалок кликом на крестик
-function hadleClosePopupByButton(event) {
-  closePopup(event.currentTarget.closest('.popup'));
-}
-
-// Закрытие модалок кликом на оверлей
-function hadleClosePopupByOverlay(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(event.target);
-  }
+  document.removeEventListener('keydown', hadleСloseByEscape);
 }
 
 // закрытие попапа клавишей Esc
-document.addEventListener('keydown', function (event) {
-  const openedPopup = document.querySelector('.popup_opened');
-
-  if (openedPopup && event.key == 'Escape') {
+const hadleСloseByEscape = (event) => {
+  if (event.key == 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
-});
+}
+
+// Для каждого попапа вешаем обработчик и проверям куда нажали (не клик, он с багом случайного закрытия)
+popups.forEach( popup => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup__close')) {
+      closePopup(popup)
+    }
+  })
+})
 
 // Обновляем информацию профиля
 function handleProfileFormSubmit(event) {
@@ -115,11 +110,14 @@ profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 function handleAddCardSubmit(event) {
   event.preventDefault();
   const form = event.target;
+  const button = form.querySelector('.popup-form__submit');
   const item = {};
   item.name = form.querySelector('#card-title').value;
   item.link = form.querySelector('#card-link').value;
   renderItem(item);
   form.reset(); // очищаем поля формы
+  button.setAttribute('disabled', '');
+  button.classList.add('popup-form__submit_disabled')
   closePopup(addCardPopup);
 }
 
@@ -130,11 +128,6 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
-  // по идее тут надо вызывать функцию проверки состояния инпутов и в зависимости от этого менять состояние кнопки
-  // но я не знаю как это реализовать без дублирования
-  // const inputList = [nameInput, jobInput];
-  // const button = profileEditPopup.querySelector('.popup-form__submit')
-  // toggleButtonState(inputList, button, { inactiveButtonClass: 'popup-form__submit_disabled'} )
 });
 
 // Открытие модалки добавление карточки
@@ -193,3 +186,6 @@ function openFullwidthImg(event) {
 }
 
 render(initialCards);
+
+
+// Геннадий, спасибо большое за ревью!
