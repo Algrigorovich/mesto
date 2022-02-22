@@ -18,7 +18,6 @@ const popupProfileOpenButton = document.querySelector('.profile__edit-btn');
 const popupAddOpenButton = document.querySelector('.profile__add-btn');
 const cardImageLink = document.querySelector('.popup__img');
 const cardImageName = document.querySelector('.popup__img-name');
-
 // Формы
 const profileEditForm = document.querySelector('#profile-edit-form');
 const addCardForm = document.querySelector('#add-cart-form');
@@ -85,7 +84,7 @@ const hadleСloseByEscape = (event) => {
 }
 
 // Для каждого попапа вешаем обработчик и проверям куда нажали (не клик, он с багом случайного закрытия)
-popups.forEach( popup => {
+popups.forEach(popup => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup)
@@ -102,9 +101,6 @@ function handleProfileFormSubmit(event) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(profileEditPopup);
-  const inputList = [nameInput, jobInput];
-  const button = profileEditPopup.querySelector('.popup-form__submit')
-  toggleButtonState(inputList, button, { inactiveButtonClass: 'popup-form__submit_disabled'} )
 }
 
 profileEditForm.addEventListener('submit', handleProfileFormSubmit);
@@ -131,6 +127,20 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
+
+  const inputList = [nameInput, jobInput];
+  const button = profileEditPopup.querySelector('.popup-form__submit')
+  const inputError = document.querySelectorAll('.popup-form__input-error')
+
+  toggleButtonState(inputList, button, { inactiveButtonClass: 'popup-form__submit_disabled' });
+
+  inputList.forEach(input => {
+    input.classList.remove('popup-form__input_type_error');
+  })
+  inputError.forEach(input => {
+    input.classList.remove('popup-form__input-error_visible');
+  })
+
 
 });
 
