@@ -102,6 +102,9 @@ function handleProfileFormSubmit(event) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(profileEditPopup);
+  const inputList = [nameInput, jobInput];
+  const button = profileEditPopup.querySelector('.popup-form__submit')
+  toggleButtonState(inputList, button, { inactiveButtonClass: 'popup-form__submit_disabled'} )
 }
 
 profileEditForm.addEventListener('submit', handleProfileFormSubmit);
@@ -128,6 +131,7 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(profileEditPopup);
+
 });
 
 // Открытие модалки добавление карточки
