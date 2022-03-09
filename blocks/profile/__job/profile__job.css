@@ -8,6 +8,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 336px;
+  width: 100%;
 }
 @media screen and (max-width: 767px) {
   .profile__job {

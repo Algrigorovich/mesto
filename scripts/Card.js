@@ -1,5 +1,5 @@
 export class Card {
-  constructor (data, cardSelector, handleOpenCardImage) {
+  constructor(data, cardSelector, handleOpenCardImage) {
     this._link = data.link;
     this._name = data.name;
     this._cardSelector = cardSelector;
@@ -25,7 +25,6 @@ export class Card {
     return this._element;
   }
 
-
   _setEventListeners() {
     this._element.querySelector('.gallery-item__delete').addEventListener('click', () => {
       this._handleDelete();
@@ -46,7 +45,5 @@ export class Card {
 
   _handleFavourite = () => {
     this._element.querySelector('.gallery-item__favourite').classList.toggle('gallery-item__favourite_active');
-  }
-
+  };
 }
-

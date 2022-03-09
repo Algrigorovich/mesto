@@ -1,6 +1,6 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js'
-import { initialCards, config } from "./initialData.js";
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+import {initialCards, config} from './initialData.js';
 
 // Элементы
 const profileName = document.querySelector('.profile__name');
@@ -60,19 +60,19 @@ const hadleСloseByEscape = (event) => {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
-}
+};
 
 // Для каждого попапа вешаем обработчик и проверям куда нажали
-popups.forEach(popup => {
+popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
+      closePopup(popup);
     }
     if (evt.target.classList.contains('popup__close')) {
-      closePopup(popup)
+      closePopup(popup);
     }
-  })
-})
+  });
+});
 
 // Обновляем информацию профиля
 function handleProfileFormSubmit(event) {
@@ -90,14 +90,13 @@ function handleAddCardSubmit(event) {
   const form = event.target;
   const item = {
     name: form.querySelector('#card-title').value,
-    link: form.querySelector('#card-link').value
+    link: form.querySelector('#card-link').value,
   };
   const card = new Card(item, '.gallery-item-template', openFullwidthImg);
   const cardElement = card.generateCard();
   cardsList.prepend(cardElement);
 
-  form.reset(); // очищаем поля формы
-
+  closePopup(addCardPopup);
 }
 
 addCardForm.addEventListener('submit', handleAddCardSubmit);
@@ -106,30 +105,32 @@ addCardForm.addEventListener('submit', handleAddCardSubmit);
 popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  profileEditFormValidator.toggleButtonState();
-  openPopup(profileEditPopup);
 
+  profileEditFormValidator.resetErrors();
+  profileEditFormValidator.toggleButtonState();
+
+  openPopup(profileEditPopup);
 });
 
 // Открытие модалки добавление карточки
 popupAddOpenButton.addEventListener('click', function () {
-  addCardFormValidator.revalidateForm();
+  addCardFormValidator.resetErrors();
+  addCardFormValidator.resetForm();
   addCardFormValidator.toggleButtonState();
   openPopup(addCardPopup);
 });
 
 // Открываем картинки
-function openFullwidthImg (link, name)  {
+function openFullwidthImg(link, name) {
   popupImageLink.src = link;
   popupImageLink.alt = name;
   popupImageName.textContent = name;
   openPopup(imgPopup);
 }
 
-
 // Рендер карточек
 function render(items) {
-  items.forEach(item => {
+  items.forEach((item) => {
     const card = new Card(item, '.gallery-item-template', openFullwidthImg); // передаём объект аргументом
     const cardElement = card.generateCard();
     cardsList.prepend(cardElement);
