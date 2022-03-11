@@ -27,11 +27,23 @@ const addCardForm = document.querySelector('#add-cart-form');
 const nameInput = document.querySelector('#name');
 const jobInput = document.querySelector('#about');
 
-const profileEditFormValidator = new FormValidator(config, profileEditForm);
-const addCardFormValidator = new FormValidator(config, addCardForm);
+// Валидация форм
+// спасибо за совет! так действительно очень удобно
 
-profileEditFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(config);
 
 // Функция открытия модалки
 export function openPopup(popup) {
@@ -92,10 +104,8 @@ function handleAddCardSubmit(event) {
     name: form.querySelector('#card-title').value,
     link: form.querySelector('#card-link').value,
   };
-  const card = new Card(item, '.gallery-item-template', openFullwidthImg);
-  const cardElement = card.generateCard();
-  cardsList.prepend(cardElement);
-
+  const cardElement = createCard(item);
+  renderItem(cardElement, cardsList);
   closePopup(addCardPopup);
 }
 
@@ -106,17 +116,15 @@ popupProfileOpenButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 
-  profileEditFormValidator.resetErrors();
-  profileEditFormValidator.toggleButtonState();
+  formValidators['profile-edit'].resetErrors();
 
   openPopup(profileEditPopup);
 });
 
 // Открытие модалки добавление карточки
 popupAddOpenButton.addEventListener('click', function () {
-  addCardFormValidator.resetErrors();
-  addCardFormValidator.resetForm();
-  addCardFormValidator.toggleButtonState();
+  formValidators['add-cart'].resetErrors();
+  formValidators['add-cart'].resetForm();
   openPopup(addCardPopup);
 });
 
@@ -127,13 +135,26 @@ function openFullwidthImg(link, name) {
   popupImageName.textContent = name;
   openPopup(imgPopup);
 }
+function createCard(item) {
+  const card = new Card(item, '.gallery-item-template', openFullwidthImg); // передаём объект аргументом
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
+// Рендер карточки
+function renderItem(item, wrapper, toStart = true) {
+  if (toStart) {
+  wrapper.prepend(item);
+  } else {
+    wrapper.append(item);
+  }
+}
 
 // Рендер карточек
 function render(items) {
   items.forEach((item) => {
-    const card = new Card(item, '.gallery-item-template', openFullwidthImg); // передаём объект аргументом
-    const cardElement = card.generateCard();
-    cardsList.prepend(cardElement);
+    const cardElement = createCard(item);
+    renderItem(cardElement, cardsList, true);
   });
 }
 

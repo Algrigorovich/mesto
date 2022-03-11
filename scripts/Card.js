@@ -8,7 +8,6 @@ export class Card {
 
   _getTemplate() {
     const cardElement = document.querySelector(this._cardSelector).content.querySelector('.gallery-item').cloneNode(true);
-
     return cardElement;
   }
 
@@ -16,6 +15,8 @@ export class Card {
     this._element = this._getTemplate();
     this._elementImg = this._element.querySelector('.gallery-item__img');
     this._elementName = this._element.querySelector('.gallery-item__title');
+    this._likeButton = this._element.querySelector('.gallery-item__favourite');
+    this._buttonClose = this._element.querySelector('.gallery-item__delete');
 
     this._elementImg.src = this._link;
     this._elementImg.alt = this._name;
@@ -26,11 +27,11 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.gallery-item__delete').addEventListener('click', () => {
+    this._buttonClose.addEventListener('click', () => {
       this._handleDelete();
     });
 
-    this._element.querySelector('.gallery-item__favourite').addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._handleFavourite();
     });
 
@@ -40,10 +41,10 @@ export class Card {
   }
 
   _handleDelete() {
-    this._element.closest('.gallery-item').remove();
+    this._element.remove();
   }
 
   _handleFavourite = () => {
-    this._element.querySelector('.gallery-item__favourite').classList.toggle('gallery-item__favourite_active');
+    this._likeButton.classList.toggle('gallery-item__favourite_active');
   };
 }
