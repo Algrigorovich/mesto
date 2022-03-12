@@ -123,8 +123,8 @@ popupProfileOpenButton.addEventListener('click', function () {
 
 // Открытие модалки добавление карточки
 popupAddOpenButton.addEventListener('click', function () {
-  formValidators['add-cart'].resetErrors();
   formValidators['add-cart'].resetForm();
+  formValidators['add-cart'].resetErrors();
   openPopup(addCardPopup);
 });
 
