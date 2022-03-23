@@ -1,4 +1,4 @@
-import {config} from './initialData.js';
+import {config} from './constants.js';
 
 export class FormValidator {
   constructor(config, formElement) {
@@ -9,14 +9,14 @@ export class FormValidator {
   }
 
   _showInputError(inputElement) {
-    const errorElement = this._form.querySelector(`.${inputElement.name}-input-error`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}-input-error`);
     errorElement.classList.add(this._config.errorClass);
     errorElement.textContent = inputElement.validationMessage;
     inputElement.classList.add(this._config.inputErrorClass);
   }
 
   _hideInputError(inputElement) {
-    const errorElement = this._form.querySelector(`.${inputElement.name}-input-error`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}-input-error`);
     errorElement.classList.remove(this._config.errorClass);
     errorElement.textContent = '';
     inputElement.classList.remove(this._config.inputErrorClass);
@@ -67,8 +67,5 @@ export class FormValidator {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
-  }
-  resetForm() {
-    this._form.reset();
   }
 }

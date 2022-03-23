@@ -1,14 +1,3 @@
-// Селекторы форм
-
-export const config = {
-  formSelector: '.popup-form',
-  inputSelector: '.popup-form__input',
-  submitButtonSelector: '.popup-form__submit',
-  inactiveButtonClass: 'popup-form__submit_disabled',
-  inputErrorClass: 'popup-form__input_type_error',
-  errorClass: 'popup-form__input-error_visible',
-}
-
 // Карточки по умолчанию
 export const initialCards = [
   {
