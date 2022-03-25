@@ -5,14 +5,11 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._formSubmit = formSubmit;
     this._popupForm = this._popup.querySelector('.popup-form');
-    this._submitButton = this._popupForm.querySelector('.popup-form__submit');
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
     this._getInputValues = this._getInputValues.bind(this);
   }
 
   _handleFormSubmit(event) {
-    event.preventDefault();
-
     this._formSubmit(this._getInputValues());
     this.close();
   }
@@ -27,12 +24,12 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    this._popupForm.addEventListener('submit', this._handleFormSubmit);
     super.setEventListeners();
+    this._popupForm.addEventListener('submit', this._handleFormSubmit);
   }
 
   close() {
-    this._popupForm.reset();
     super.close();
+    this._popupForm.reset();
   }
 }

@@ -1,4 +1,4 @@
-import {initialCards} from './initialData.js';
+import {initialCards} from '../scripts/initialData.js';
 import {
   profileName,
   profileInfo,
@@ -12,14 +12,17 @@ import {
   nameInput,
   infoInput,
   config,
-} from './constants.js';
+} from '../scripts/constants.js';
 
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+
+import {Card} from '../scripts/components/Card.js';
+import {FormValidator} from '../scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import UserInfo from '../scripts/components/UserInfo.js';
+
+import '../pages/index.css';
 
 // Валидация форм
 const formValidators = {};
@@ -43,8 +46,7 @@ const cardList = new Section(
     items: initialCards,
     renderer: (item) => {
       const card = new Card(item, cardSelector, () => {
-        const imagePopup = new PopupWithImage(imgPopupSelector, item);
-        imagePopup.open();
+        imagePopup.open(item);
       });
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
@@ -55,15 +57,23 @@ const cardList = new Section(
 
 cardList.renderItems();
 
-// Создаем экземпляр класса для попапа редактирования профиля
+
+const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo});
+const imagePopup = new PopupWithImage(imgPopupSelector);
+
+imagePopup.setEventListeners();
+
+
+// Создаем экземпляр класса для попапа редактирования профиля,
+// в функции сабмита выставляем на странице данные из инпутов
+// data получаем из _getInputValues класса PopupWithForm
 const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
-  const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo});
   userInfo.setUserInfo(data);
 });
+popupWithEditForm.setEventListeners();
 
 // Открываем попап редактирования профиля
 popupProfileOpenButton.addEventListener('click', () => {
-  const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo});
   const data = userInfo.getUserInfo();
   nameInput.value = data.name;
   infoInput.value = data.info;
@@ -71,12 +81,16 @@ popupProfileOpenButton.addEventListener('click', () => {
   popupWithEditForm.open();
 });
 
+popupWithEditForm.setEventListeners();
+
 // Создаем экземпляр класса для попапа добавления карточки
 const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
-  const newData = {name: data['card-title'], link: data['card-link']};
+  const newData = {
+    name: data['card-title'],
+    link: data['card-link']
+  }
   const card = new Card(newData, cardSelector, () => {
-    const imagePopup = new PopupWithImage(imgPopupSelector, newData);
-    imagePopup.open();
+    imagePopup.open(newData);
   });
   const cardElement = card.generateCard();
   cardList.addItem(cardElement);

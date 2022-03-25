@@ -5,18 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css" />
+  <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
 </head>
 <body class="page">
   <div class="page__container">
     <header class="header page__header">
       <a href="/" class="logo">
-        <img src="./images/logo.svg" alt="Логотип" class="logo__img" />
+        <img src="<%=require('./images/logo.svg')%>" alt="Логотип" class="logo__img" />
       </a>
     </header>
     <main class="content">
       <section class="profile content__profile">
-        <img src="./images/avatar.png" alt="Аватар" class="profile__avatar" />
+        <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar" />
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-btn" type="button" aria-label="Редактировать"></button>
@@ -73,7 +73,7 @@
     <div class="popup popup_fullscreen-img">
       <div class="popup__container popup__container_type_image">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <img src="#" alt="Альт" class="popup__img">
+        <img src="" alt="Альт" class="popup__img">
         <p class="popup__img-name"></p>
       </div>
     </div>
@@ -81,7 +81,7 @@
   <template class="gallery-item-template">
     <li class="gallery-item">
       <img alt="" class="gallery-item__img" />
-      <img src="./images/trash.svg" class="gallery-item__delete" alt="Удалить">
+      <img src="<%=require('./images/trash.svg')%>" class="gallery-item__delete" alt="Удалить">
       <div class="gallery-item__footer">
         <h2 class="gallery-item__title"></h2>
         <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
@@ -89,7 +89,7 @@
     </li>
   </template>
 
-  <script src="./scripts/index.js" type="module"></script>
+  <!-- <script src="./scripts/index.js" type="module"></script> -->
 
   <!-- <script src="./scripts/validation.js"></script> -->
 </body>
