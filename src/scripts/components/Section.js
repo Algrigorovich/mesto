@@ -10,7 +10,9 @@ export default class Section {
       this._renderer(item);
     });
   }
+
   addItem(item) {
+    // const card = this._renderer(item) // чёт я туплю, не соображу как переделать renderer, чтобы отказаться от createCard
     this._container.prepend(item);
   }
 }

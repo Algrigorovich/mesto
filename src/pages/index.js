@@ -41,15 +41,19 @@ const enableValidation = (config) => {
 enableValidation(config);
 
 // рендерим карточки
+function createCard(item) {
+  const card = new Card(item, cardSelector, () => {
+    imagePopup.open(item);
+  });
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
 const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, cardSelector, () => {
-        imagePopup.open(item);
-      });
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
+      cardList.addItem(createCard(item));
     },
   },
   cardsList
@@ -57,31 +61,21 @@ const cardList = new Section(
 
 cardList.renderItems();
 
-
 const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo});
 const imagePopup = new PopupWithImage(imgPopupSelector);
 
-imagePopup.setEventListeners();
-
-
 // Создаем экземпляр класса для попапа редактирования профиля,
-// в функции сабмита выставляем на странице данные из инпутов
-// data получаем из _getInputValues класса PopupWithForm
 const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
   userInfo.setUserInfo(data);
 });
-popupWithEditForm.setEventListeners();
 
 // Открываем попап редактирования профиля
 popupProfileOpenButton.addEventListener('click', () => {
-  const data = userInfo.getUserInfo();
-  nameInput.value = data.name;
-  infoInput.value = data.info;
   formValidators['profile-edit'].resetErrors();
+  const data = userInfo.getUserInfo();
+  popupWithEditForm.setInputValues(data); // подскажите, я правильно реализовал эту функциональностЬ?
   popupWithEditForm.open();
 });
-
-popupWithEditForm.setEventListeners();
 
 // Создаем экземпляр класса для попапа добавления карточки
 const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
@@ -89,11 +83,7 @@ const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
     name: data['card-title'],
     link: data['card-link']
   }
-  const card = new Card(newData, cardSelector, () => {
-    imagePopup.open(newData);
-  });
-  const cardElement = card.generateCard();
-  cardList.addItem(cardElement);
+  cardList.addItem(createCard(newData));
 });
 
 popupAddOpenButton.addEventListener('click', () => {
