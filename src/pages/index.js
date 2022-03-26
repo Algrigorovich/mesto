@@ -14,7 +14,6 @@ import {
   config,
 } from '../scripts/constants.js';
 
-
 import {Card} from '../scripts/components/Card.js';
 import {FormValidator} from '../scripts/components/FormValidator.js';
 import Section from '../scripts/components/Section.js';
@@ -81,8 +80,8 @@ popupProfileOpenButton.addEventListener('click', () => {
 const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
   const newData = {
     name: data['card-title'],
-    link: data['card-link']
-  }
+    link: data['card-link'],
+  };
   cardList.addItem(createCard(newData));
 });
 
