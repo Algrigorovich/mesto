@@ -51,9 +51,7 @@ function createCard(item) {
 const cardList = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      cardList.addItem(createCard(item));
-    },
+    renderer: createCard,
   },
   cardsList
 );
@@ -72,7 +70,7 @@ const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
 popupProfileOpenButton.addEventListener('click', () => {
   formValidators['profile-edit'].resetErrors();
   const data = userInfo.getUserInfo();
-  popupWithEditForm.setInputValues(data); // подскажите, я правильно реализовал эту функциональностЬ?
+  popupWithEditForm.setInputValues(data);
   popupWithEditForm.open();
 });
 
@@ -82,7 +80,7 @@ const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
     name: data['card-title'],
     link: data['card-link'],
   };
-  cardList.addItem(createCard(newData));
+  cardList.addItem(newData);
 });
 
 popupAddOpenButton.addEventListener('click', () => {

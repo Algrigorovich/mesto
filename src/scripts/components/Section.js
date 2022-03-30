@@ -7,12 +7,12 @@ export default class Section {
 
   renderItems() {
     this._items.forEach((item) => {
-      this._renderer(item);
+      this.addItem(item);
     });
   }
 
   addItem(item) {
-    // const card = this._renderer(item) // чёт я туплю, не соображу как переделать renderer, чтобы отказаться от createCard
-    this._container.prepend(item);
+    const card = this._renderer(item);
+    this._container.prepend(card);
   }
 }
