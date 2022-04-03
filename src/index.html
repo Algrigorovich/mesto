@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mesto</title>
-  <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
 </head>
 <body class="page">
   <div class="page__container">
@@ -16,7 +15,10 @@
     </header>
     <main class="content">
       <section class="profile content__profile">
-        <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar" />
+        <div class="profile__avatar-wrapper">
+          <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar" />
+          <button title="Загрузить новый аватар" class="profile__edit-avatar-btn"></button>
+        </div>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-btn" type="button" aria-label="Редактировать"></button>
@@ -32,50 +34,73 @@
     <footer class="footer page__footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <div class="popup popup_edit-profile">
-      <div class="popup__container">
-        <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form action="/" method="post" class="popup-form" name="profile-edit" id="profile-edit-form" novalidate>
-          <label for="name" class="popup-form__field">
-            <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя" required minlength="2"
-              maxlength="40" />
-            <span class="popup-form__input-error name-input-error">Ошибка</span>
-          </label>
-          <label for="about" class="popup-form__field">
-            <input type="text" class="popup-form__input" id="about" name="info" placeholder="О себе" required
-              minlength="2" maxlength="200" />
-            <span class="popup-form__input-error about-input-error">Ошибка</span>
-          </label>
-          <button class="popup-form__submit" type="submit">Сохранить</button>
-        </form>
-      </div>
+  </div>
+  <div class="popup popup_edit-profile">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form action="/" method="post" class="popup-form" name="profile-edit" id="profile-edit-form" novalidate>
+        <label for="name" class="popup-form__field">
+          <input type="text" class="popup-form__input" id="name" name="name" placeholder="Имя" required minlength="2"
+            maxlength="40" />
+          <span class="popup-form__input-error name-input-error">Ошибка</span>
+        </label>
+        <label for="about" class="popup-form__field">
+          <input type="text" class="popup-form__input" id="about" name="info" placeholder="О себе" required
+            minlength="2" maxlength="200" />
+          <span class="popup-form__input-error about-input-error">Ошибка</span>
+        </label>
+        <button class="popup-form__submit" type="submit">Сохранить</button>
+      </form>
     </div>
-    <div class="popup popup_add-item">
-      <div class="popup__container">
-        <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <h2 class="popup__title">Новое место</h2>
-        <form action="/" method="post" class="popup-form" name="add-cart" id="add-cart-form" novalidate>
-          <label for="card-title" class="popup-form__field">
-            <input type="text" class="popup-form__input" required id="card-title" name="card-title"
-              placeholder="Название" minlength="2" maxlength="30" />
-            <span class="popup-form__input-error card-title-input-error">Ошибка</span>
-          </label>
-          <label for="card-link" class="popup-form__field">
-            <input type="url" class="popup-form__input" required id="card-link" name="card-link"
-              placeholder="Ссылка на картинку"/>
-            <span class="popup-form__input-error card-link-input-error popup-form__input-error_active">Ошибка</span>
-          </label>
-          <button class="popup-form__submit" type="submit">Создать</button>
-        </form>
-      </div>
+  </div>
+  <div class="popup popup_add-item">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form action="/" method="post" class="popup-form" name="add-cart" id="add-cart-form" novalidate>
+        <label for="card-title" class="popup-form__field">
+          <input type="text" class="popup-form__input" required id="card-title" name="card-title"
+            placeholder="Название" minlength="2" maxlength="30" />
+          <span class="popup-form__input-error card-title-input-error">Ошибка</span>
+        </label>
+        <label for="card-link" class="popup-form__field">
+          <input type="url" class="popup-form__input" required id="card-link" name="card-link"
+            placeholder="Ссылка на картинку"/>
+          <span class="popup-form__input-error card-link-input-error popup-form__input-error_active">Ошибка</span>
+        </label>
+        <button class="popup-form__submit" type="submit">Создать</button>
+      </form>
     </div>
-    <div class="popup popup_fullscreen-img">
-      <div class="popup__container popup__container_type_image">
-        <button class="popup__close" type="button" aria-label="Закрыть"></button>
-        <img src="#" alt="Альт" class="popup__img">
-        <p class="popup__img-name"></p>
-      </div>
+  </div>
+  <div class="popup popup_fullscreen-img">
+    <div class="popup__container popup__container_type_image">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <img src="#" alt="Альт" class="popup__img">
+      <p class="popup__img-name"></p>
+    </div>
+  </div>
+  <div class="popup popup_confirm">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title popup__title_place_confirm">Вы уверены?</h2>
+      <form action="/" method="post" class="popup-form" name="confirm" id="confirm-form" novalidate>
+        <button class="popup-form__submit" type="submit">Да</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_edit-avatar">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form action="/" method="post" class="popup-form" name="edit-avatar" id="edit-avatar" novalidate>
+        <label for="avatar-link" class="popup-form__field">
+          <input type="url" class="popup-form__input" required id="avatar-link" name="avatar-link"
+            placeholder="Ссылка на аватар"/>
+          <span class="popup-form__input-error card-link-input-error popup-form__input-error_active">Ошибка</span>
+        </label>
+        <button class="popup-form__submit" type="submit">Сохранить</button>
+      </form>
     </div>
   </div>
   <template class="gallery-item-template">
@@ -84,13 +109,12 @@
       <img src="<%=require('./images/trash.svg')%>" class="gallery-item__delete" alt="Удалить">
       <div class="gallery-item__footer">
         <h2 class="gallery-item__title"></h2>
-        <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
+        <div class="gallery-item__likes-wrapper">
+          <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
+          <span class="gallery-item__like-counter">6</span>
+        </div>
       </div>
     </li>
   </template>
-
-  <!-- <script src="./pages/index.js" type="module"></script> -->
-
-  <!-- <script src="./scripts/validation.js"></script> -->
 </body>
 </html>

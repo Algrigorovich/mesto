@@ -1,8 +1,7 @@
-import {initialCards} from '../scripts/initialData.js';
 import {
   profileName,
   profileInfo,
-  cardsList,
+  cardsList as cardsListSeelctor,
   cardSelector,
   profileEditPopup,
   addCardPopup,
@@ -20,8 +19,10 @@ import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
+import { api } from '../scripts/components/Api.js';
 
 import '../pages/index.css';
+
 
 // Валидация форм
 const formValidators = {};
@@ -39,6 +40,20 @@ const enableValidation = (config) => {
 
 enableValidation(config);
 
+ api.getProfileData()
+   .then((res)=> {
+     userInfo.setUserInfo(res.name, res.about);
+  });
+
+  api.getInitialCards()
+    .then(cardlist => {
+      console.log(cardlist, 'cardlist')
+      cardlist.forEach(data => {
+        cardsList.addItem({name:data.name, link: data.link})
+      })
+  });
+
+
 // рендерим карточки
 function createCard(item) {
   const card = new Card(item, cardSelector, () => {
@@ -48,22 +63,19 @@ function createCard(item) {
   return cardElement;
 }
 
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: createCard,
-  },
-  cardsList
-);
-
-cardList.renderItems();
+const cardsList = new Section({ items: [], renderer: createCard }, cardsListSeelctor);
 
 const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo});
 const imagePopup = new PopupWithImage(imgPopupSelector);
 
 // Создаем экземпляр класса для попапа редактирования профиля,
 const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
-  userInfo.setUserInfo(data);
+  const { name, info}  = data;
+
+  api.editProfile(name, info)
+  .then(()=> {
+    userInfo.setUserInfo(name, info);
+  })
 });
 
 // Открываем попап редактирования профиля
@@ -76,11 +88,14 @@ popupProfileOpenButton.addEventListener('click', () => {
 
 // Создаем экземпляр класса для попапа добавления карточки
 const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
-  const newData = {
-    name: data['card-title'],
-    link: data['card-link'],
-  };
-  cardList.addItem(newData);
+
+ api.addCard()
+  .then(res => {
+    cardsList.addItem({
+      name: res.name,
+      link: res.link
+    });
+  })
 });
 
 popupAddOpenButton.addEventListener('click', () => {
