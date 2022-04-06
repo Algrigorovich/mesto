@@ -16,13 +16,13 @@
     <main class="content">
       <section class="profile content__profile">
         <div class="profile__avatar-wrapper">
-          <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar" />
+          <img src="" alt="Аватар" class="profile__avatar" />
           <button title="Загрузить новый аватар" class="profile__edit-avatar-btn"></button>
         </div>
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button class="profile__edit-btn" type="button" aria-label="Редактировать"></button>
-          <p class="profile__job">Исследователь океана</p>
+          <p class="profile__job"></p>
         </div>
         <button class="profile__add-btn" type="button" aria-label="Добавить"></button>
       </section>
@@ -97,7 +97,7 @@
         <label for="avatar-link" class="popup-form__field">
           <input type="url" class="popup-form__input" required id="avatar-link" name="avatar-link"
             placeholder="Ссылка на аватар"/>
-          <span class="popup-form__input-error card-link-input-error popup-form__input-error_active">Ошибка</span>
+          <span class="popup-form__input-error avatar-link-input-error popup-form__input-error_active">Ошибка</span>
         </label>
         <button class="popup-form__submit" type="submit">Сохранить</button>
       </form>
@@ -111,7 +111,7 @@
         <h2 class="gallery-item__title"></h2>
         <div class="gallery-item__likes-wrapper">
           <button class="gallery-item__favourite" type="button" aria-label="Поставить лайк"></button>
-          <span class="gallery-item__like-counter">6</span>
+          <span class="gallery-item__like-counter">0</span>
         </div>
       </div>
     </li>

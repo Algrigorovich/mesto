@@ -1,3 +1,4 @@
+import {setTimeout} from 'core-js';
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
@@ -8,11 +9,17 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
     this._getInputValues = this._getInputValues.bind(this);
     this._inputList = [...this._popupForm.querySelectorAll('.popup-form__input')];
+    this._submitButton = this._popup.querySelector('.popup-form__submit');
+    this._initButtonText = this._submitButton.textContent;
   }
 
   _handleFormSubmit(event) {
-    this._formSubmit(this._getInputValues());
-    this.close();
+    this._formSubmit(this._getInputValues(), this.submitButton);
+  }
+
+  changeFormSubmitHandler(newSubmitHandler) {
+    this._formSubmit = newSubmitHandler;
+    // this.close();
   }
 
   _getInputValues() {
@@ -27,6 +34,14 @@ export default class PopupWithForm extends Popup {
     this._inputList.forEach((input) => {
       input.value = data[input.name];
     });
+  }
+
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._submitButton.textContent = 'Сохранение...';
+    } else {
+      this._submitButton.textContent = this._initButtonText;
+    }
   }
 
   setEventListeners() {
