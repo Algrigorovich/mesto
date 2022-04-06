@@ -45,7 +45,7 @@ enableValidation(config);
 const initialData = [api.getProfileData(), api.getInitialCards()]
 
 Promise.all(initialData)
-  .then( ([userData, cards]) => {
+  .then(([userData, cards]) => {
     userInfo.setUserInfo(userData.name, userData.about);
     userInfo.setUserAvatar(userData.avatar);
     userId = userData._id;
@@ -107,10 +107,9 @@ const cardsList = new Section({items: [], renderer: createCard}, cardsListSelect
 const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo, avatarSelector: profileAvatar});
 const imagePopup = new PopupWithImage(imgPopupSelector);
 const comfirmPopup = new PopupWithForm(confirmPopup);
-const updateAvatarPopup = new PopupWithForm(editAvatarPopup, (data, button) => {
+const updateAvatarPopup = new PopupWithForm(editAvatarPopup, (data) => {
   updateAvatarPopup.renderLoading(true);
-  api
-    .updateAvatar(data)
+  api.updateAvatar(data)
     .then((res) => {
       userInfo.setUserAvatar(res.avatar);
     })
@@ -122,7 +121,7 @@ const updateAvatarPopup = new PopupWithForm(editAvatarPopup, (data, button) => {
 });
 
 // Создаем экземпляр класса для попапа редактирования профиля,
-const popupWithEditForm = new PopupWithForm(profileEditPopup, (data, button) => {
+const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
   popupWithEditForm.renderLoading(true);
   const {name, info} = data;
   api.editProfile(name, info)
@@ -145,7 +144,7 @@ popupProfileOpenButton.addEventListener('click', () => {
 });
 
 // Создаем экземпляр класса для попапа добавления карточки
-const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data, button) => {
+const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
   popupWithAddCardForm.renderLoading(true);
   api.addCard(data['card-title'], data['card-link'])
     .then((res) => {
