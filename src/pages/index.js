@@ -20,6 +20,7 @@ import {FormValidator} from '../scripts/components/FormValidator.js';
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithConfirm from '../scripts/components/PopupWithConfirm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import {api} from '../scripts/components/Api.js';
 
@@ -71,17 +72,19 @@ function createCard(item) {
     () => {
       imagePopup.open(item);
     },
+    /* handleCardDeleteClick */
     (id) => {
-      comfirmPopup.open();
-      comfirmPopup.changeFormSubmitHandler(() => {
+      comfirmationPopup.open();
+      comfirmationPopup.newHandleFormSubmit(() => {
         api.deleteCard(id)
-          .then((res) => {
-            card.handleDelete();
-            comfirmPopup.close();
-          })
-          .catch((err) => console.log(err));
-      });
+        .then((res) => {
+          card.handleDelete();
+          comfirmationPopup.close();
+        })
+        .catch((err) => console.log(err));
+      })
     },
+    /* handleCardLikeClick */
     (id) => {
       if (card.isLiked()) {
         api.deleteCardLike(id)
@@ -106,17 +109,18 @@ function createCard(item) {
 const cardsList = new Section({items: [], renderer: createCard}, cardsListSelector);
 const userInfo = new UserInfo({nameSelector: profileName, infoSelector: profileInfo, avatarSelector: profileAvatar});
 const imagePopup = new PopupWithImage(imgPopupSelector);
-const comfirmPopup = new PopupWithForm(confirmPopup);
+const comfirmationPopup = new PopupWithConfirm(confirmPopup);
+
 const updateAvatarPopup = new PopupWithForm(editAvatarPopup, (data) => {
   updateAvatarPopup.renderLoading(true);
   api.updateAvatar(data)
     .then((res) => {
       userInfo.setUserAvatar(res.avatar);
+      updateAvatarPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
       updateAvatarPopup.renderLoading(false);
-      updateAvatarPopup.close();
     });
 });
 
@@ -127,11 +131,12 @@ const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
   api.editProfile(name, info)
     .then(() => {
       userInfo.setUserInfo(name, info);
+      popupWithEditForm.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
       popupWithEditForm.renderLoading(false);
-      popupWithEditForm.close();
+
     });
 });
 
@@ -156,13 +161,20 @@ const popupWithAddCardForm = new PopupWithForm(addCardPopup, (data) => {
         userId: userId,
         ownerId: res.owner._id,
       });
+      popupWithAddCardForm.close();
     })
     .catch((err) => console.log(err))
     .finally(() => {
       popupWithAddCardForm.renderLoading(false);
-      popupWithAddCardForm.close();
     });
 });
+
+//Вешаем слушатели на попапы
+imagePopup.setEventListeners();
+comfirmationPopup.setEventListeners();
+updateAvatarPopup.setEventListeners();
+popupWithEditForm.setEventListeners();
+popupWithAddCardForm.setEventListeners();
 
 popupEditAvatarButton.addEventListener('click', () => {
   formValidators['edit-avatar'].resetErrors();

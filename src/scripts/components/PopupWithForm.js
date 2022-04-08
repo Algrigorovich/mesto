@@ -1,4 +1,3 @@
-import {setTimeout} from 'core-js';
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
@@ -14,12 +13,11 @@ export default class PopupWithForm extends Popup {
   }
 
   _handleFormSubmit(event) {
-    this._formSubmit(this._getInputValues(), this.submitButton);
+    this._formSubmit(this._getInputValues());
   }
 
   changeFormSubmitHandler(newSubmitHandler) {
     this._formSubmit = newSubmitHandler;
-    // this.close();
   }
 
   _getInputValues() {
