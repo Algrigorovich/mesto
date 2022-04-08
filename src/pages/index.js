@@ -76,12 +76,16 @@ function createCard(item) {
     (id) => {
       comfirmationPopup.open();
       comfirmationPopup.newHandleFormSubmit(() => {
+        comfirmationPopup.renderLoading(true);
         api.deleteCard(id)
         .then((res) => {
           card.handleDelete();
           comfirmationPopup.close();
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => {
+          comfirmationPopup.renderLoading(false);
+        });
       })
     },
     /* handleCardLikeClick */
@@ -136,7 +140,6 @@ const popupWithEditForm = new PopupWithForm(profileEditPopup, (data) => {
     .catch((err) => console.log(err))
     .finally(() => {
       popupWithEditForm.renderLoading(false);
-
     });
 });
 
